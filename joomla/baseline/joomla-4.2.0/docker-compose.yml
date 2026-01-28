@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  joomla:
+    image: olianasd/joomla4stile
+    container_name: joomla
+    ports:
+      - "3000:80"
+    stdin_open: true
+    tty: true
+    networks:
+      - test-network
+
+  maven-java21:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: joomla-4.2.0-maven
+    working_dir: /app
+    volumes:
+      - .:/app
+      - maven-repo:/root/.m2
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+    networks:
+      - test-network
+    depends_on:
+      - browser
+      - joomla
+
+  browser:
+    image: selenium/standalone-chrome:latest
+    container_name: browser
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    shm_size: 2gb
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./videos:/videos:rw
+    environment:
+      - SE_OPTS=--override-max-sessions false --session-request-timeout 300
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+      - SE_FFMPEG_THREADS=2
+    networks:
+      - test-network
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  maven-repo:
