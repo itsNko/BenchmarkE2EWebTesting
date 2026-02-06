@@ -17,13 +17,13 @@ import java.time.Duration;
 public class Installer {
 	
 	protected WebDriver driver;
-	protected static final String install_url = "http://192.168.1.141:8080/install/";
+	protected static final String install_url = "http://some-prestashop:80/install/";
 	@Test
 	public void install() throws InterruptedException {
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--no-sandbox", "--headless=new", "--lang=it", "--disable-gpu", "--screen-info={1920x1080}");
 		try {
-			driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
+			driver = new RemoteWebDriver(new URL("http://browser:4444/wd/hub"), chromeOptions);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

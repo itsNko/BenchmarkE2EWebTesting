@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  some-mysql:
+    image: mysql:5.7
+    container_name: some-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3307:3306"
+    networks:
+      - prestashop-net
+
+  some-prestashop:
+    image: prestashop/prestashop:1.6.1.23
+    container_name: some-prestashop
+    ports:
+      - "8080:80"
+    environment:
+      DB_SERVER: some-mysql
+    depends_on:
+      - some-mysql
+    networks:
+      - prestashop-net
+
+  maven:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: prestashop-1.6.1.23-maven
+    working_dir: /app
+    volumes:
+      - .:/app
+      - maven-repo:/root/.m2
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+    networks:
+      - prestashop-net
+    depends_on:
+      - browser
+      - some-prestashop
+
+  browser:
+    image: selenium/standalone-chrome:latest
+    container_name: browser
+    stdin_open: true 
+    tty: true
+    restart: always
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    shm_size: 2gb
+    environment:
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+      - SE_START_XVFB=true
+      - SE_START_VNC=true
+      - SE_START_NO_VNC=true
+    networks:
+      - prestashop-net
+
+  chrome-video:
+    image: selenium/video:latest
+    container_name: chrome-video
+    depends_on:
+      - browser
+    volumes:
+      - ./videos:/videos
+    environment:
+      - DISPLAY_CONTAINER_NAME=browser
+      - SE_VIDEO_FILE_NAME=auto
+      - SE_VIDEO_FILE_NAME_SUFFIX=false
+      - SE_VIDEO_RECORD_STANDALONE=true
+      - SE_NODE_GRID_URL=http://browser:4444
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+    networks:
+      - prestashop-net
+
+networks:
+  prestashop-net:
+    driver: bridge
+
+volumes:
+  maven-repo:
