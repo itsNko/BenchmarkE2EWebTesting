@@ -38,7 +38,6 @@ services:
       - /dev/shm:/dev/shm
       - ./videos:/videos:rw
     environment:
-      - SE_OPTS=--override-max-sessions false --session-request-timeout 300
       - SE_SCREEN_WIDTH=1920
       - SE_SCREEN_HEIGHT=1080
       - SE_FFMPEG_THREADS=2
