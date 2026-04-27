@@ -11,7 +11,7 @@ import po.IndexPage;
 public class Claroline_RemoveMultipleUsersTest extends BaseTest {
 	
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testRemoveMultipleUsers() throws InterruptedException{
 		AdminUsersPage aup = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goToAdminPage()

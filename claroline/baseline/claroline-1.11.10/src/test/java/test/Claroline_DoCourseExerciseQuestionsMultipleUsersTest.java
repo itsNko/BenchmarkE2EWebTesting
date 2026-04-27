@@ -10,7 +10,7 @@ import po.TrackExercisePage;
 public class Claroline_DoCourseExerciseQuestionsMultipleUsersTest extends BaseTest {
 	
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testDoCourseExerciseQuestionsMultipleUsers() throws InterruptedException{
 		TrackExercisePage tep = new IndexPage(driver)
 			.login("testuser1", "n0tl34k3dy3t")
 			.goInsideCourse()

@@ -11,7 +11,7 @@ import po.IndexPage;
 public class Claroline_AddCourseExerciseTest extends BaseTest {
 
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testAddCourseExercise() throws InterruptedException{
 		EditExercisePage eep = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goInsideCourse()

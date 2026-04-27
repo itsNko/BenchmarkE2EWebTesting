@@ -1,0 +1,55 @@
+services:
+  joomla:
+    build:
+      context: .
+      dockerfile: docker/joomla-coverage/Dockerfile
+    image: olianasd/joomla4stile-coverage
+    container_name: joomla
+    ports:
+      - "3000:80"
+    volumes:
+      - ./coverage:/app/coverage:rw
+      - ./php/conf.d/99-coverage.ini:/etc/php/8.2/apache2/conf.d/99-coverage.ini:ro
+    stdin_open: true
+    tty: true
+    networks:
+      - test-network
+
+  maven-java21:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: joomla-4.2.0-maven
+    working_dir: /app
+    volumes:
+      - .:/app
+      - maven-repo:/root/.m2
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+    networks:
+      - test-network
+    depends_on:
+      - browser
+      - joomla
+
+  browser:
+    image: selenium/standalone-chrome:latest
+    container_name: browser
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    shm_size: 2gb
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./videos:/videos:rw
+    environment:
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+      - SE_FFMPEG_THREADS=2
+    networks:
+      - test-network
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  maven-repo:

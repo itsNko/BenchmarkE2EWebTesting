@@ -10,7 +10,7 @@ import po.IndexPage;
 public class Claroline_SearchTeacherTest extends BaseTest {
 	
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testSearchTeacher() throws InterruptedException{
 		AdminUsersPage aup = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goToAdminPage()

@@ -10,7 +10,7 @@ import po.IndexPage;
 public class Claroline_EnrolPasswordCourseWrongPasswordUserTest extends BaseTest {
 	
 	@Test
-	public void enrolPasswordCourseWrongPassword() throws InterruptedException{
+	public void testEnrolPasswordCourseWrongPassword() throws InterruptedException{
 		AuthCoursesPage acp = new IndexPage(driver)
 				.login("user001", "n0tl34k3dy3t")
 				.enrolToCourse()

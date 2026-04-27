@@ -10,7 +10,7 @@ import po.IndexPage;
 public class Claroline_RemoveUserTest extends BaseTest {
 	
 	@Test
-	public void removeUserTest() throws InterruptedException{
+	public void testRemoveUser() throws InterruptedException{
 		AdminUsersPage aup = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goToAdminPage()

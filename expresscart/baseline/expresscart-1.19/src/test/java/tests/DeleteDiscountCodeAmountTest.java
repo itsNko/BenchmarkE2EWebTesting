@@ -12,7 +12,7 @@ import po.DiscountCodesPage;
 public class DeleteDiscountCodeAmountTest extends BaseTest {
 
 	@Test
-	public void testExpressCartAddDiscountCodeAmount() throws Exception {
+	public void testExpressCartDeleteDiscountCodeAmount() throws Exception {
 		goToAdminHome();
 		DiscountCodesPage codes = new AdminLoginPage(driver)
 			.setEmail("owner@test.com")

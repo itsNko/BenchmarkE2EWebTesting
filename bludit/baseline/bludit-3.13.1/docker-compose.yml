@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  bludit:
+    image: bludit/docker:3.13.1
+    container_name: bludit
+    ports:
+      - "8080:80"
+    stdin_open: true
+    tty: true
+    networks:
+      - test-network
+
+  maven-java21:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: bludit-3.13.1-maven
+    working_dir: /app
+    volumes:
+      - .:/app
+      - maven-repo:/root/.m2
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+    networks:
+      - test-network
+    depends_on:
+      - browser
+      - bludit
+
+  browser:
+    image: selenium/standalone-chrome:latest
+    container_name: browser
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    shm_size: 2gb
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+      - SE_START_XVFB=true
+      - SE_START_VNC=true
+      - SE_START_NO_VNC=true
+    networks:
+      - test-network
+
+  chrome-video:
+    image: selenium/video:latest
+    container_name: chrome-video
+    depends_on:
+      - browser
+    volumes:
+      - ./videos:/videos
+    environment:
+      - DISPLAY_CONTAINER_NAME=browser
+      - SE_VIDEO_FILE_NAME=auto
+      - SE_VIDEO_FILE_NAME_SUFFIX=false
+      - SE_VIDEO_RECORD_STANDALONE=true
+      - SE_NODE_GRID_URL=http://browser:4444
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  maven-repo:

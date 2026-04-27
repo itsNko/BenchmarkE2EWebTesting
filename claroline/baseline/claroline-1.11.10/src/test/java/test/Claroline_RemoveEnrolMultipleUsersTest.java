@@ -10,7 +10,7 @@ import po.UserPage;
 public class Claroline_RemoveEnrolMultipleUsersTest extends BaseTest {
 	
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testRemoveEnrolMultipleUsers() throws InterruptedException{
 		UserPage up  = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goInsideCourse()

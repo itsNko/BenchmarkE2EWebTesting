@@ -40,7 +40,7 @@ The installation wizard can be executed automatically by running `tests.Installe
 *	Site name: TestRigor joomla test
 *	Email: olianas@fake.com
 *	Username: administrator
-*	Password: e2eW3Bt3s71nGB3nchM4rK
+*	Password: e2eW3Bt3s71nGB3nchM4rK or dodicicaratteri
 * 	Database type: MySQLi
 *	Host Name: joomladb
 *	Username (database): root

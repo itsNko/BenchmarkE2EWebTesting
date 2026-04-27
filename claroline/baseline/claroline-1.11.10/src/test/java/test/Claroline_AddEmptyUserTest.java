@@ -11,7 +11,7 @@ public class Claroline_AddEmptyUserTest extends BaseTest {
 	
 	
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testAddEmptyUser() throws InterruptedException{
 		AdminAddNewUserPage aanup = new IndexPage(driver)
 			.login("admin", "n0tl34k3dy3t")
 			.goToAdminPage()

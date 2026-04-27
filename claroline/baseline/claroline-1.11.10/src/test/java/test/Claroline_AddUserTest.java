@@ -10,7 +10,7 @@ import po.IndexPage;
 public class Claroline_AddUserTest extends BaseTest {
 	
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testAddUser() throws InterruptedException{
 		AdminAddNewUserPage aanup = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goToAdminPage()

@@ -10,7 +10,7 @@ import po.AdminLoginPage;
 public class LoginDeletedUserFailsTest extends BaseTest {
 
 	@Test
-	public void testExpressCartLoginUser() throws Exception {
+	public void testExpressCartLoginDeletedUserFails() throws Exception {
 		goToAdminHome();
 		AdminLoginPage login = new AdminLoginPage(driver)
 			.setEmail("test000@test.com")

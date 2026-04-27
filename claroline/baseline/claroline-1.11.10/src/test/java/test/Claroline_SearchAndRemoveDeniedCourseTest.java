@@ -10,7 +10,7 @@ import po.IndexPage;
 public class Claroline_SearchAndRemoveDeniedCourseTest extends BaseTest {
 	
 	@Test
-	public void searchAndRemoveDeniedCourse() throws InterruptedException{
+	public void testSearchAndRemoveDeniedCourse() throws InterruptedException{
 		AdminCoursesPage acp = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goToAdminPage()

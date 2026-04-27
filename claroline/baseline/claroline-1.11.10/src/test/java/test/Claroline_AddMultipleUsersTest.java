@@ -11,7 +11,7 @@ public class Claroline_AddMultipleUsersTest extends BaseTest {
 
 	
 	@Test
-	public void runTest() throws InterruptedException {
+	public void testAddMultipleUsers() throws InterruptedException {
 		AdminUsersPage aup = new IndexPage(driver)
 			.login("admin", "n0tl34k3dy3t")
 			.goToAdminPage()

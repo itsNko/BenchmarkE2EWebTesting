@@ -21,3 +21,29 @@ This test suite has been executed 50 times on Google Chrome version 138 without 
 docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" --name=browser selenium/standalone-chrome:138.0-chromedriver-138.0
 ```
 
+## Docker Compose + per-test videos
+
+The baseline now includes a `docker-compose.yml` that starts:
+
+- `expresscart` (app under test)
+- `browser` (`selenium/standalone-chrome` with video support)
+- `maven-java21` (test runner)
+
+Each JUnit test records a video and the `@After` hook renames the generated mp4 to the test method name (for example, `testExpressCartNewUser.mp4`).
+
+Run from `expresscart/baseline/expresscart-1.19`:
+
+```bash
+docker compose up -d
+docker compose exec -T maven-java21 mvn -Dtest=TestSuite test
+docker compose down
+```
+
+Recorded videos are exported to:
+
+- `expresscart/baseline/expresscart-1.19/videos`
+
+# Toe execute tests:
+```bash
+mvn test -Dtest=tests.TestSuite
+```

@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class ClarolinePage {
 
-	private final String app_url = "http://192.168.1.141:3000/claroline11110/claroline/index.php";
+	private final String app_url = "http://claroline:80/claroline11110/claroline/index.php";
 	@FindBy(linkText="Logout")
 	private WebElement logout;
 	@FindBy(xpath=".//*[@id='claroBody']/div[2]/div[1]")

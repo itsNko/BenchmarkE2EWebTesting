@@ -6,7 +6,12 @@ package tests;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
 
+import po.KanboardHomePage;
 import po.LoginPage;
 import po.SwimlanesPage;
 
@@ -17,8 +22,15 @@ public class AddEmptySwimlane extends BaseTest {
 		  
 	@Test()
 	public void addNewSwimlane() {
-		SwimlanesPage swimlanes = new LoginPage(driver)
-				.loginToKanboard("admin", password)
+		KanboardHomePage home = new LoginPage(driver)
+				.loginToKanboard("admin", password);
+		
+		// Small wait after login for page to fully load
+		new WebDriverWait(driver, Duration.ofSeconds(2)).until(
+			ExpectedConditions.visibilityOfElementLocated(By.id("dashboard"))
+		);
+		
+		SwimlanesPage swimlanes = home
 				.firstProjectSummary()
 				.swimlanes()
 				.addSwimlane()

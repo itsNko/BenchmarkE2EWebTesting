@@ -10,7 +10,7 @@ import po.IndexPage;
 public class Claroline_RemoveCourseExerciseTest extends BaseTest {
 	
 	@Test
-	public void removeCourseExerciseTest() throws InterruptedException{
+	public void testRemoveCourseExercise() throws InterruptedException{
 		ExercisePage ep = new IndexPage(driver)
 				.login("admin", "n0tl34k3dy3t")
 				.goInsideCourse()

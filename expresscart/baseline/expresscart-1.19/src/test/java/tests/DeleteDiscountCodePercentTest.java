@@ -13,7 +13,7 @@ public class DeleteDiscountCodePercentTest extends BaseTest {
 
 
 	@Test
-	public void testExpressCartAddDiscountCodePercent() throws Exception {
+	public void testExpressCartDeleteDiscountCodePercent() throws Exception {
 		goToAdminHome();
 		DiscountCodesPage codes = new AdminLoginPage(driver)
 			.setEmail("owner@test.com")

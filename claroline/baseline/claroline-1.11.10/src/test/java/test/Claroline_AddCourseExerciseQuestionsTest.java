@@ -10,7 +10,7 @@ public class Claroline_AddCourseExerciseQuestionsTest extends BaseTest {
 	
 	
 	@Test
-	public void runTest() throws InterruptedException{
+	public void testAddCourseExerciseQuestions() throws InterruptedException{
 		EditExercisePage eep = new IndexPage(driver)
 			.login("admin", "n0tl34k3dy3t")
 			.goInsideCourse()

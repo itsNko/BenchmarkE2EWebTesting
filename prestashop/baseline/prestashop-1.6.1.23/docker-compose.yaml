@@ -20,7 +20,7 @@ services:
       - some-mysql
     networks:
       - prestashop-net
-      - gherkin-generator_tfm-eneko-network
+      # - gherkin-generator_tfm-eneko-network
 
   maven:
     image: maven:3.9-eclipse-temurin-21
@@ -78,8 +78,8 @@ services:
 networks:
   prestashop-net:
     driver: bridge
-  gherkin-generator_tfm-eneko-network:
-    external: true
+  # gherkin-generator_tfm-eneko-network:
+  #   external: true
 
 volumes:
   maven-repo:

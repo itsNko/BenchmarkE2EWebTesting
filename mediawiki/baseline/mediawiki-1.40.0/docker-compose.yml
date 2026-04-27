@@ -2,10 +2,12 @@
 #
 # Access via "http://localhost:8080"
 #   (or "http://$(docker-machine ip):8080" if using docker-machine)
-version: '3'
+version: '3.8'
+
 services:
   mediawiki:
     image: mediawiki:1.40.0
+    container_name: mediawiki
     restart: always
     ports:
       - 8080:80
@@ -13,23 +15,80 @@ services:
       - database
     volumes:
       - images:/var/www/html/images
-      # After initial setup, download LocalSettings.php to the same directory as
-      # this yaml and uncomment the following line and use compose to restart
-      # the mediawiki service
-      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
-  # This key also defines the name of the database host used during setup instead of the default "localhost"
+    networks:
+      - test-network
+
   database:
     image: mariadb
+    container_name: mediawiki-db
     restart: always
     environment:
-      # @see https://phabricator.wikimedia.org/source/mediawiki/browse/master/includes/DefaultSettings.php
       MYSQL_DATABASE: my_wiki
       MYSQL_USER: wikiuser
       MYSQL_PASSWORD: example
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
     volumes:
       - db:/var/lib/mysql
+    networks:
+      - test-network
+
+  maven-java21:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: mediawiki-1.40.0-maven
+    working_dir: /app
+    volumes:
+      - .:/app
+      - maven-repo:/root/.m2
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+    networks:
+      - test-network
+    depends_on:
+      - browser
+      - mediawiki
+
+  browser:
+    image: selenium/standalone-chrome:latest
+    container_name: browser
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    shm_size: 2gb
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+      - SE_START_XVFB=true
+      - SE_START_VNC=true
+      - SE_START_NO_VNC=true
+    networks:
+      - test-network
+
+  chrome-video:
+    image: selenium/video:latest
+    container_name: chrome-video
+    depends_on:
+      - browser
+    volumes:
+      - ./videos:/videos
+    environment:
+      - DISPLAY_CONTAINER_NAME=browser
+      - SE_VIDEO_FILE_NAME=auto
+      - SE_VIDEO_FILE_NAME_SUFFIX=false
+      - SE_VIDEO_RECORD_STANDALONE=true
+      - SE_NODE_GRID_URL=http://browser:4444
+      - SE_SCREEN_WIDTH=1920
+      - SE_SCREEN_HEIGHT=1080
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
 
 volumes:
   images:
   db:
+  maven-repo:
